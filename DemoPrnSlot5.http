@@ -1,0 +1,6 @@
+@DemoPrnSlot5_HostAddress = http://localhost:5127
+
+GET {{DemoPrnSlot5_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

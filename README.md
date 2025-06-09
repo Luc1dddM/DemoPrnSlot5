@@ -34,6 +34,18 @@ Nhưng nếu phải in 1000 hay 100000 lần thì sao? Việc copy-paste như tr
 
 Vòng lặp `for` được dùng để lặp qua các phần tử của một **đối tượng lặp** (`iterable`) như chuỗi (string), danh sách (list), tuple, dictionary, v.v.
 
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/9.jpg" class="img-fluid rounded z-depth-1" %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/7.jpg" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    A simple, elegant caption looks good between image rows, after each row, or doesn't have to be there at all.
+</div>
+
 ### Cú pháp
 
 ```python

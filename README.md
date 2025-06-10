@@ -8,8 +8,8 @@
   - [1.4. Hàm trong python](#14-hàm-trong-python)
   - [1.5. Rẽ nhánh trong python](#15-rẽ-nhánh-trong-python)
 - [2. Kiến thức mở rộng](#2-kiến-thức-mở-rộng)
-  - [2.1. Chủ đề nâng cao 1](#21-chủ-đề-nâng-cao-1)
-  - [2.2. Chủ đề nâng cao 2](#22-chủ-đề-nâng-cao-2)
+  - [2.1. SQL](#21-SQL)
+  - [2.2. Python methodology](#22-python-methodology)
 - [3. Tổng kết](#3-tổng-kết)
 
 ---

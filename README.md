@@ -3,7 +3,6 @@
 🔖 **Mục lục nhanh**:
 - [Kiến thức cơ bản](#-kiến-thức-cơ-bản)
   - [Python Cơ Bản](#1-Python-Cơ-Bản)
-  - [Vòng Lặp Trong Python](#2-Vòng-Lặp-Trong-Python)
 - [Kiến thức mở rộng](#-kiến-thức-mở-rộng)
   - [Chủ đề nâng cao 1](#1-chủ-đề-nâng-cao-1)
   - [Chủ đề nâng cao 2](#2-chủ-đề-nâng-cao-2)
@@ -13,7 +12,7 @@
 
 ## 📌 Kiến Thức Cơ Bản
 
-### 1. Python Cơ Bản
+### 1. Kiểu dữ liệu
 - Nội dung chính...
 
 ### 2. Vòng Lặp Trong Python

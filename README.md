@@ -1,11 +1,10 @@
 # Recap Kiến Thức Tuần [X] - [Tháng/Ngày]
 
-Mở đầu ngắn gọn (1-2 câu) về phạm vi kiến thức được học trong tuần.
-
-## 📌 Kiến Thức Cơ Bản
-
-### 1. [Chủ đề 1] 
-- Điểm chính 1 (bullet point)
-- Điểm chính 2 (có thể thêm code snippet nếu cần)
-```python
-# Ví dụ code (nếu có)
+🔖 **Mục lục nhanh**:
+- [Kiến thức cơ bản](#-kiến-thức-cơ-bản)
+  - [Chủ đề 1](#1-chủ-đề-1)
+  - [Chủ đề 2](#2-chủ-đề-2)
+- [Kiến thức mở rộng](#-kiến-thức-mở-rộng)
+  - [Chủ đề nâng cao 1](#1-chủ-đề-nâng-cao-1)
+  - [Chủ đề nâng cao 2](#2-chủ-đề-nâng-cao-2)
+- [Tổng kết](#-bài-học-rút-ra)

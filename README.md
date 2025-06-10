@@ -166,7 +166,7 @@ Vòng lặp `for` được dùng để lặp qua các phần tử của một **
     </div>
 </div>
 <div class="caption">
-    Hình n: Cú pháp và luồng thực thi của vòng lặp `for`.
+    Hình 1: Cú pháp và luồng thực thi của vòng lặp `for`.
 </div>
 
 ### Cú pháp
@@ -220,7 +220,7 @@ Vòng lặp `while` lặp lại **miễn là điều kiện vẫn đúng (`True`
     </div>
 </div>
 <div class="caption">
-    Hình n: Cú pháp và luồng thực thi của vòng lặp `while`.
+    Hình 2: Cú pháp và luồng thực thi của vòng lặp `while`.
 </div>
 
 ### Cú pháp
@@ -682,6 +682,93 @@ Design Patterns là các giải pháp tái sử dụng cho các vấn đề thi�
     - **Template Method Pattern**: Định nghĩa khung thuật toán trong một phương thức, cho phép các lớp con định nghĩa lại các bước cụ thể mà không thay đổi cấu trúc thuật toán.
 
 Để sử dụng Design Patterns hiệu quả, bạn cần **nắm vững 5 nguyên tắc SOLID**, **sử dụng Design Patterns phù hợp** với vấn đề cần giải quyết, **áp dụng SOLID vào Python** bằng cách tận dụng các đặc điểm của ngôn ngữ, và quan trọng nhất là **tránh lạm dụng** chúng.
+
+### 2.3. SKILL FOR AIO 2025
+
+> Dưới sự tác động mạnh mẽ của Trí tuệ nhân tạo trong việc hỗ trợ trong học tập, làm việc đòi hỏi mỗi người cần khả năng sở hữu những kỹ năng cần thiết trong việc nghiên cứu, học tập trong quá trình học khóa AIO 2025. "SKILL FOR AIO 2025" sẽ cung cấp các kỹ năng cần thiết, lộ trình học tập hiệu quả và phương pháp tiếp cận thực tế để chinh phục khóa học.
+
+### Cách Tìm Kiếm Tài Liệu Học Thuật
+
+#### Tìm kiếm các tài liệu thông qua các website uy tín như:
+
+- **Google Scholar**
+<div class="row mt-3">
+    <div class="col-full mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="https://github.com/tIKOOC/AIO_homework/tree/master/SKill-for-AIo-2025/Assets/Screenshot_2025-06-10_135847.png" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Hình 3: Giao diện Google Scholar.
+</div>
+    - Tìm kiếm bài báo, sách, luận văn về AI.
+    - Bổ sung các kiến thức ngoài tài liệu của khóa học.
+    - Nhanh gọn về các nghiên cứu mới nhất.
+
+- **Papers With Code**
+<div class="row mt-3">
+    <div class="col-full mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="https://github.com/tIKOOC/AIO_homework/tree/master/SKill-for-AIo-2025/Assets/Screenshot_2025-06-10_135847.png" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Hình 4: Giao diện Papers With Code.
+</div>
+    - Tìm bài báo kèm mã nguồn thực nghiệm, rất hữu ích để học thuật toán mới.
+    - Cung cấp các Dataset phổ biến theo từng chủ đề, các SOTA của từng phương thức.
+
+- **Group AIO-QAs-Verified**
+<div class="row mt-3">
+    <div class="col-full mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="https://github.com/tIKOOC/AIO_homework/blob/master/SKill-for-AIo-2025/Assets/Screenshot_2025-06-10_141634.png" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Hình 4: Group FB AIO-QAs-Verified.
+</div>
+    - Hỗ trợ giải đáp thắc mắc hoặc các vấn đề trong quá trình học tập, nghiên cứu.
+    - Kết nối và chia sẻ các cơ hội học tập và làm việc cho thành viên trong cộng đồng AIO.
+
+---
+
+### Sử dụng các công cụ trong quá trình học tập/nghiên cứu
+
+#### Đọc tài liệu và Papers
+
+- **Sử dụng ChatGPT hoặc các công cụ tương tự** như perplexity, Gemini để tạo ra guidelines cho kỹ năng đọc hoặc Research Plan:
+    - **Tạo Reading Skill Paper với perplexity**
+    - **Tạo Research Plan với ChatGPT**
+
+- **Flow đọc Papers hiệu quả** với kinh nghiệm của TA Đình Vinh
+
+- **Sử dụng công cụ NotebookLM** cùng với kỹ năng prompting hỗ trợ cho việc đọc paper/document.
+
+#### Hiện thực Code
+
+- **Jupyter Notebook**
+    - Sử dụng thông qua Anaconda Navigator, Pycharm.
+    - Chỉ phù hợp với các máy có tài nguyên lớn để chạy các chương trình lớn như Quá trình training model có thể mất hàng tháng.
+
+- **Google Colab**
+    - **Công cụ lập trình Online với tài nguyên miễn phí (GPU, TPU, ....)**
+    - **Hỗ trợ chạy nhanh hơn trong quá trình Chạy chương trình.**
+    - **Có thể Lưu trữ trong Google Drive.**
+    - **Sử dụng Gemini trong coding trong Colab**
+
+- **Hỗ trợ Code**
+    
+    Ngoài Gemini hỗ trợ trong Colab, các công cụ AI khác thể hiện hiệu quả mạnh mẽ giúp đọc hiểu và xử lý Code như Claude(Opus 4, Sonnet 4), Grok(Grok 3),…
+
+#### Xây dựng tài liệu
+
+- **Sử dụng Latex thông qua công cụ online Overleaf**
+    - Phù hợp với nghiên cứu khoa học.
+    - Chỉnh sửa tài liệu trực tiếp với nhiều người tham gia.
+    - Hỗ trợ format chỉn chu cho các công thức toán học, tiêu đề và chỉ mục.
+---
+
+### Kết Luận
+
+SKILL FOR AIO 2025 là thiết yếu giúp quá trình học tập, nghiên cứu với việc nắm rõ các nguồn tài liệu uy tín và thành thạo các công cụ hỗ trợ cho quá trình đọc tài liệu/Papers, Hiện thực Code và Xây dựng tài liệu sẽ giúp cho các học viên AIO hiệu quả hơn với chặng đường suốt khóa học.
     
 
 

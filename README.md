@@ -33,3 +33,15 @@ Trong Python, các kiểu dữ liệu cơ bản được sử dụng để lưu 
 **Cú pháp:**
 ```python
 tên_danh_sách = [phần_tử1, phần_tử2, ..., phần_tửN]
+```
+
+```python
+list_name = [element1, element2, ..., elementN]
+```
+**Ví dụ:**
+```python
+# Tạo danh sách trái cây
+fruits = ["apple", "banana", "cherry"]
+print(fruits[0])  # Output: apple
+```
+

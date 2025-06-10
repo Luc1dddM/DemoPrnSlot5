@@ -32,6 +32,7 @@ Trong Python, các kiểu dữ liệu cơ bản được sử dụng để lưu 
 **Cú pháp:**
 ```python
 tên_danh_sách = [phần_tử1, phần_tử2, ..., phần_tửN]
+```
 **Ví dụ:**
 ```python
 # Tạo danh sách trái cây

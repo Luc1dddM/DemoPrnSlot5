@@ -6,7 +6,7 @@
   - [1.2. Danh sách trong Python](#12-danh-trong-python)
   - [1.3. Từ điển trong python](#13-từ-điển-trong-python)
   - [1.4. Hàm trong python](#14-hàm-trong-python)
-  - [1.5. Rẽ nhánh trong python](#13-rẽ-nhánh-trong-python)
+  - [1.5. Rẽ nhánh trong python](#15-rẽ-nhánh-trong-python)
 - [2. Kiến thức mở rộng](#2-kiến-thức-mở-rộng)
   - [2.1. Chủ đề nâng cao 1](#21-chủ-đề-nâng-cao-1)
   - [2.2. Chủ đề nâng cao 2](#22-chủ-đề-nâng-cao-2)

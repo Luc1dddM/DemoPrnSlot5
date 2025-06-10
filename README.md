@@ -151,7 +151,6 @@ print("Hello World!")
 ```
 
 Nhưng nếu phải in 1000 hay 100000 lần thì sao? Việc copy-paste như trên không còn hiệu quả. Giải pháp tối ưu là **sử dụng vòng lặp** để thực hiện thao tác lặp lại một cách hiệu quả hơn.
----
 
 ### Định nghĩa vòng lặp
 

@@ -23,9 +23,19 @@ Trong Python, các kiểu dữ liệu cơ bản được sử dụng để lưu 
 | `String`         | Chuỗi ký tự | `"Xin chào"`, `'Python'` |
 | `Boolean`        | Giá trị logic: đúng hoặc sai | `True`, `False` |
 
-### 2. Vòng Lặp Trong Python
-- Nội dung chính...
+### 2. Danh sách trong Python
+- **Danh sách** là một tập hợp được sử dụng để lưu trữ nhiều mục trong một biến duy nhất.  
+Danh sách có thể chứa các phần tử thuộc bất kỳ kiểu dữ liệu nào, và các phần tử được **sắp xếp và có thể thay đổi**.
 
+Bạn có thể định nghĩa một danh sách bằng cú pháp sau:
+```python
+tên_danh_sách = [phần_tử1, phần_tử2, ..., phần_tửN]
+- **Ví dụ:**
+```python
+# Tạo danh sách trái cây
+fruits = ["apple", "banana", "cherry"]
+print(fruits[0])  # Output: apple
+```
 ---
 
 ## 🚀 Kiến Thức Mở Rộng

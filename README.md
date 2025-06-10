@@ -85,7 +85,7 @@ greet()  # Output: Hello!
 ```
 
 Hàm cũng có thể nhận **tham số (parameters)** và **trả về (return)** giá trị bằng từ khóa return:
-# Hàm với tham số và giá trị trả về
+#### Hàm với tham số và giá trị trả về
 ```python
 def sum(a, b):
     return a + b

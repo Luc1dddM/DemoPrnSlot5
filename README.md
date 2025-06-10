@@ -2,8 +2,8 @@
 
 🔖 **Mục lục nhanh**:
 - [Kiến thức cơ bản](#-kiến-thức-cơ-bản)
-  - [Basic Python](#1-chủ-đề-1)
-  - [Chủ đề 2](#2-chủ-đề-2)
+  - [Python Cơ Bản](#1-Python-Cơ-Bản)
+  - [Vòng Lặp Trong Python](#2-Vòng-Lặp-Trong-Python)
 - [Kiến thức mở rộng](#-kiến-thức-mở-rộng)
   - [Chủ đề nâng cao 1](#1-chủ-đề-nâng-cao-1)
   - [Chủ đề nâng cao 2](#2-chủ-đề-nâng-cao-2)
@@ -13,10 +13,10 @@
 
 ## 📌 Kiến Thức Cơ Bản
 
-### 1. Chủ đề 1
+### 1. Python Cơ Bản
 - Nội dung chính...
 
-### 2. Chủ đề 2
+### 2. Vòng Lặp Trong Python
 - Nội dung chính...
 
 ---

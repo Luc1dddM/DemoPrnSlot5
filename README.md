@@ -19,13 +19,14 @@
 ### 1.1. Kiểu dữ liệu
 - Các kiểu dữ liệu là nền tảng trong lập trình. Chúng xác định loại giá trị mà một biến có thể chứa.
 - Trong Python, các kiểu dữ liệu cơ bản được sử dụng để lưu trữ số, văn bản và giá trị logic.
-
+<center>
 | **Kiểu Dữ liệu** | **Mô tả** | **Ví dụ** |
 |------------------|-----------|-----------|
 | `Integer` | Số nguyên | `1`, `-5`, `100` |
 | `Float` | Số thập phân | `3.14`, `-0.01` |
 | `String` | Chuỗi ký tự | `"Xin chào"`, `'Python'` |
 | `Boolean` | Giá trị logic: đúng hoặc sai | `True`, `False` |
+</center>
 
 ### 1.2. Danh sách trong Python
 - **Danh sách (list)** là một tập hợp được sử dụng để lưu trữ nhiều mục trong một biến duy nhất.

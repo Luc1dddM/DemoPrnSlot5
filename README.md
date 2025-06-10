@@ -318,10 +318,8 @@ Kết quả:
 ---
 
 ## 2. Kiến Thức Mở Rộng
-### Database là gì?
-
-![image](https://github.com/user-attachments/assets/becae09a-27b6-497d-b4a2-0bfb3d9e7779)
-
+### 2.1 SQL
+#### Database là gì?
 Hãy tưởng tượng một database như một thư viện khổng lồ được tổ chức cực kỳ khoa học. Thay vì sách, chúng ta có dữ liệu. Và thay vì kệ sách, chúng ta có các **bảng (tables)**. Mỗi bảng chứa một loại thông tin cụ thể, ví dụ: một bảng lưu trữ thông tin khách hàng, một bảng khác lưu trữ thông tin sản phẩm, và một bảng nữa là lịch sử đơn hàng.
 
 Trong mỗi bảng, dữ liệu được sắp xếp theo **hàng (rows)** và **cột (columns)**. Mỗi hàng là một bản ghi duy nhất (ví dụ: thông tin của một khách hàng cụ thể), và mỗi cột là một thuộc tính của bản ghi đó (ví dụ: tên, địa chỉ, số điện thoại của khách hàng).
@@ -330,7 +328,7 @@ Hầu hết các database mà chúng ta làm việc ngày nay là **cơ sở d�
 
 ---
 
-### SQL: Ngôn ngữ giao tiếp với dữ Liệu
+#### SQL: Ngôn ngữ giao tiếp với dữ Liệu
 
 SQL là ngôn ngữ tiêu chuẩn để giao tiếp với cơ sở dữ liệu quan hệ, chuyên biệt cho các tác vụ như:
 
@@ -342,13 +340,11 @@ SQL được sử dụng rộng rãi nhờ tính hiệu quả và khả năng t�
 
 ---
 
-### SQL trong phân tích dữ liệu
+#### SQL trong phân tích dữ liệu
 
 Dựa trên các kỹ năng cần thiết cho Data Analysis, SQL được chia thành 4 cấp độ chính:
 
-![image](https://github.com/user-attachments/assets/fcf8749a-a655-4149-929d-6615e1a78fd1)
-
-#### 1. Basics (Cơ bản)
+##### 2.1.1. Basics (Cơ bản)
 
 Đây là những câu lệnh nền tảng để trích xuất và sắp xếp dữ liệu.
 
@@ -388,7 +384,7 @@ Dựa trên các kỹ năng cần thiết cho Data Analysis, SQL được chia t
     HAVING AVG(price) > 100;
     ```
 
-#### 2. Intermediate (Trung cấp)
+##### 2.1.2. Intermediate (Trung cấp)
 
 Nâng cao khả năng lọc và xử lý dữ liệu với các toán tử và hàm.
 
@@ -429,7 +425,7 @@ Nâng cao khả năng lọc và xử lý dữ liệu với các toán tử và h
     FROM products;
     ```
 
-#### 3. Joins (Kết Nối Bảng)
+##### 2.1.3. Joins (Kết Nối Bảng)
 
 Kỹ năng thiết yếu để kết hợp dữ liệu từ nhiều bảng.
 
@@ -458,7 +454,7 @@ Kỹ năng thiết yếu để kết hợp dữ liệu từ nhiều bảng.
     JOIN employees e2 ON e1.manager_id = e2.employee_id;
     ```
 
-#### 4. Advanced (Nâng cao)
+##### 2.1.4. Advanced (Nâng cao)
 
 Các kỹ thuật mạnh mẽ cho phân tích dữ liệu phức tạp.
 

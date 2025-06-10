@@ -317,4 +317,213 @@ Kết quả:
 
 ---
 
+## 2. Kiến Thức Mở Rộng
+### Database là gì?
+
+![image](https://github.com/user-attachments/assets/becae09a-27b6-497d-b4a2-0bfb3d9e7779)
+
+Hãy tưởng tượng một database như một thư viện khổng lồ được tổ chức cực kỳ khoa học. Thay vì sách, chúng ta có dữ liệu. Và thay vì kệ sách, chúng ta có các **bảng (tables)**. Mỗi bảng chứa một loại thông tin cụ thể, ví dụ: một bảng lưu trữ thông tin khách hàng, một bảng khác lưu trữ thông tin sản phẩm, và một bảng nữa là lịch sử đơn hàng.
+
+Trong mỗi bảng, dữ liệu được sắp xếp theo **hàng (rows)** và **cột (columns)**. Mỗi hàng là một bản ghi duy nhất (ví dụ: thông tin của một khách hàng cụ thể), và mỗi cột là một thuộc tính của bản ghi đó (ví dụ: tên, địa chỉ, số điện thoại của khách hàng).
+
+Hầu hết các database mà chúng ta làm việc ngày nay là **cơ sở dữ liệu quan hệ (relational databases)**. Điều này có nghĩa là các bảng có thể được liên kết với nhau thông qua các mối quan hệ logic, giúp chúng ta dễ dàng kết hợp thông tin từ nhiều nguồn khác nhau.
+
+---
+
+### SQL: Ngôn ngữ giao tiếp với dữ Liệu
+
+SQL là ngôn ngữ tiêu chuẩn để giao tiếp với cơ sở dữ liệu quan hệ, chuyên biệt cho các tác vụ như:
+
+* **Truy vấn dữ liệu:** Lấy thông tin.
+* **Thao tác dữ liệu:** Thêm, sửa, xóa dữ liệu.
+* **Định nghĩa dữ liệu:** Xây dựng cấu trúc database.
+
+SQL được sử dụng rộng rãi nhờ tính hiệu quả và khả năng tương thích với nhiều hệ quản trị cơ sở dữ liệu (MySQL, PostgreSQL, SQL Server, Oracle...).
+
+---
+
+### SQL trong phân tích dữ liệu
+
+Dựa trên các kỹ năng cần thiết cho Data Analysis, SQL được chia thành 4 cấp độ chính:
+
+![image](https://github.com/user-attachments/assets/fcf8749a-a655-4149-929d-6615e1a78fd1)
+
+#### 1. Basics (Cơ bản)
+
+Đây là những câu lệnh nền tảng để trích xuất và sắp xếp dữ liệu.
+
+* **`SELECT`**: Chọn cột dữ liệu.
+    ```sql
+    SELECT customer_name, email
+    FROM customers;
+    ```
+* **`FROM`**: Chỉ định bảng nguồn.
+    ```sql
+    SELECT *
+    FROM products;
+    ```
+* **`WHERE`**: Lọc hàng theo điều kiện.
+    ```sql
+    SELECT product_name, price
+    FROM products
+    WHERE price > 50;
+    ```
+* **`GROUP BY`**: Nhóm các hàng để tổng hợp.
+    ```sql
+    SELECT category, COUNT(product_id) AS num_products
+    FROM products
+    GROUP BY category;
+    ```
+* **`ORDER BY`**: Sắp xếp kết quả.
+    ```sql
+    SELECT customer_name, total_orders
+    FROM customers
+    ORDER BY total_orders DESC;
+    ```
+* **`HAVING`**: Lọc các nhóm đã được tổng hợp.
+    ```sql
+    SELECT category, AVG(price) AS avg_price
+    FROM products
+    GROUP BY category
+    HAVING AVG(price) > 100;
+    ```
+
+#### 2. Intermediate (Trung cấp)
+
+Nâng cao khả năng lọc và xử lý dữ liệu với các toán tử và hàm.
+
+* **`BETWEEN`**: Lọc giá trị trong phạm vi.
+    ```sql
+    SELECT order_id, order_date
+    FROM orders
+    WHERE order_date BETWEEN '2025-01-01' AND '2025-01-31';
+    ```
+* **`LIKE`**: Tìm kiếm mẫu chuỗi.
+    ```sql
+    SELECT customer_name, email
+    FROM customers
+    WHERE customer_name LIKE 'Nguyen%';
+    ```
+* **`NULL`**: Kiểm tra giá trị rỗng.
+    ```sql
+    SELECT product_name
+    FROM products
+    WHERE description IS NULL;
+    ```
+* **`IN`**: Kiểm tra giá trị trong danh sách.
+    ```sql
+    SELECT product_name, category
+    FROM products
+    WHERE category IN ('Electronics', 'Books');
+    ```
+* **`OFFSET` / `LIMIT`**: Phân trang kết quả.
+    ```sql
+    SELECT customer_name
+    FROM customers
+    ORDER BY customer_id
+    LIMIT 10 OFFSET 20;
+    ```
+* **`COALESCE`**: Trả về giá trị không `NULL` đầu tiên.
+    ```sql
+    SELECT product_name, COALESCE(description, 'No description available') AS product_description
+    FROM products;
+    ```
+
+#### 3. Joins (Kết Nối Bảng)
+
+Kỹ năng thiết yếu để kết hợp dữ liệu từ nhiều bảng.
+
+* **`INNER JOIN`**: Trả về hàng trùng khớp ở cả hai bảng.
+    ```sql
+    SELECT o.order_id, c.customer_name
+    FROM orders o
+    INNER JOIN customers c ON o.customer_id = c.customer_id;
+    ```
+* **`LEFT JOIN`**: Trả về tất cả hàng từ bảng trái và các hàng trùng khớp từ bảng phải.
+    ```sql
+    SELECT c.customer_name, o.order_id
+    FROM customers c
+    LEFT JOIN orders o ON c.customer_id = o.customer_id;
+    ```
+* **`RIGHT JOIN`**: Tương tự `LEFT JOIN`, ưu tiên bảng phải.
+    ```sql
+    SELECT p.product_name, oi.quantity
+    FROM order_items oi
+    RIGHT JOIN products p ON oi.product_id = p.product_id;
+    ```
+* **`SELF JOIN`**: Kết nối một bảng với chính nó.
+    ```sql
+    SELECT e1.employee_name AS employee, e2.employee_name AS manager
+    FROM employees e1
+    JOIN employees e2 ON e1.manager_id = e2.employee_id;
+    ```
+
+#### 4. Advanced (Nâng cao)
+
+Các kỹ thuật mạnh mẽ cho phân tích dữ liệu phức tạp.
+
+* **`WINDOW FUNCTIONS`**: Thực hiện tính toán trên một tập hợp con các hàng liên quan.
+    ```sql
+    SELECT
+        order_id,
+        total_amount,
+        AVG(total_amount) OVER (PARTITION BY DATE_TRUNC('month', order_date)) AS monthly_avg_amount
+    FROM
+        orders;
+    ```
+* **`RANK()` / `DENSE_RANK()` / `ROW_NUMBER()`**: Xếp hạng các hàng.
+    ```sql
+    SELECT
+        product_name,
+        category,
+        price,
+        RANK() OVER (PARTITION BY category ORDER BY price DESC) AS price_rank_in_category
+    FROM
+        products;
+    ```
+* **`PIVOT`**: Chuyển đổi hàng thành cột để tổng hợp. (Cú pháp tùy DBMS)
+    ```sql
+    SELECT
+        ProductName,
+        [2023] AS Sales_2023, 
+        [2024] AS Sales_2024  
+    FROM
+        (
+            SELECT
+                p.ProductName,
+                YEAR(s.SaleDate) AS SaleYear,
+                s.Quantity AS SoldQuantity
+            FROM
+                Products p
+            JOIN
+                Sales s ON p.ProductID = s.ProductID
+            WHERE
+                YEAR(s.SaleDate) IN (2023, 2024) 
+        ) AS SourceData
+    PIVOT
+    (
+        SUM(SoldQuantity) 
+        FOR SaleYear IN ([2023], [2024])
+    ) AS PivotedSalesByYear;
+    ```
+* **`CTE` (Common Table Expressions)**: Định nghĩa các tập kết quả tạm thời để dễ đọc và quản lý.
+    ```sql
+    WITH MonthlySales AS (
+        SELECT
+            DATE_TRUNC('month', order_date) AS sales_month,
+            SUM(quantity * price) AS total_monthly_sales
+        FROM
+            orders
+        GROUP BY
+            sales_month
+    )
+    SELECT
+        sales_month,
+        total_monthly_sales
+    FROM
+        MonthlySales
+    WHERE
+        total_monthly_sales > 10000;
+    ```
+
 

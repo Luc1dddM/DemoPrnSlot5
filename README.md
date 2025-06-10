@@ -344,7 +344,7 @@ SQL được sử dụng rộng rãi nhờ tính hiệu quả và khả năng t�
 
 Dựa trên các kỹ năng cần thiết cho Data Analysis, SQL được chia thành 4 cấp độ chính:
 
-##### 2.1.1. Basics (Cơ bản)
+##### 1. Basics (Cơ bản)
 
 Đây là những câu lệnh nền tảng để trích xuất và sắp xếp dữ liệu.
 
@@ -384,7 +384,7 @@ Dựa trên các kỹ năng cần thiết cho Data Analysis, SQL được chia t
     HAVING AVG(price) > 100;
     ```
 
-##### 2.1.2. Intermediate (Trung cấp)
+##### 2. Intermediate (Trung cấp)
 
 Nâng cao khả năng lọc và xử lý dữ liệu với các toán tử và hàm.
 
@@ -425,7 +425,7 @@ Nâng cao khả năng lọc và xử lý dữ liệu với các toán tử và h
     FROM products;
     ```
 
-##### 2.1.3. Joins (Kết Nối Bảng)
+##### 3. Joins (Kết Nối Bảng)
 
 Kỹ năng thiết yếu để kết hợp dữ liệu từ nhiều bảng.
 
@@ -454,7 +454,7 @@ Kỹ năng thiết yếu để kết hợp dữ liệu từ nhiều bảng.
     JOIN employees e2 ON e1.manager_id = e2.employee_id;
     ```
 
-##### 2.1.4. Advanced (Nâng cao)
+##### 4. Advanced (Nâng cao)
 
 Các kỹ thuật mạnh mẽ cho phân tích dữ liệu phức tạp.
 
@@ -521,5 +521,167 @@ Các kỹ thuật mạnh mẽ cho phân tích dữ liệu phức tạp.
     WHERE
         total_monthly_sales > 10000;
     ```
+    
+### 2.2 Python Methodology
+
+### 2.2.1: CƠ BẢN VỀ CLEAN CODE VÀ PEP-8
+
+#### I. Clean code
+
+Clean code là mã nguồn rõ ràng, dễ đọc, dễ bảo trì, có khả năng mở rộng và dễ dàng kiểm thử.
+
+- **Readable (dễ đọc và dễ hiểu)**: Code nên được viết sao cho người khác có thể dễ dàng hiểu được mục đích và cách thức hoạt động.
+- **Maintainable (dễ bảo trì)**: Clean code nên dễ dàng sửa đổi, mở rộng và tái sử dụng mà không gây ra lỗi phụ.
+- **Testable (dễ kiểm thử)**: Code sạch nên được thiết kế để dễ dàng viết unit test và thực hiện kiểm thử tự động.
+- **Extensible (có khả năng mở rộng)**: Code được thiết kế để dễ dàng thêm tính năng mới mà không cần thay đổi code hiện tại.
+
+##### Mục tiêu của clean code
+
+Clean code giúp các lập trình viên dễ dàng làm việc với nó như sửa lỗi, mở rộng tính năng và tái sử dụng.
+
+##### Lợi ích của clean code
+
+Clean code giúp tăng hiệu suất làm việc, cải thiện hợp tác nhóm và giảm chi phí bảo trì dài hạn
+
+- **Giảm thiểu lỗi**: mã dễ đọc và dễ hiểu giúp phát hiện và ngăn ngừa lỗi hiệu quả hơn.
+- **Giảm chi phí và thời gian phát triển**: mã sạch giúp việc gỡ lỗi và phát triển tính năng mới nhanh hơn.
+- **Tăng hiệu suất làm việc của nhóm**: khi mọi thành viên trong nhóm đều hiểu và làm việc với cùng một phong cách clean code thì hợp tác sẽ hiệu quả hơn và nếu có người mới tham gia dự án thì có thể nhanh chóng hòa nhập và bắt đầu đóng góp vào dự án.
+- **Dễ dàng mở rộng**: Clean code có cấu trúc rõ ràng, dễ dàng thêm tính năng mới mà không làm ảnh hưởng đến hệ thống hiện tại.
+
+#### II. PEP-8
+
+**PEP-8 (Python Enhancement Proposal 8)** là **tiêu chuẩn định dạng code Python chính thức**, do Guido van Rossum – cha đẻ của Python – tạo ra. Mục tiêu của PEP-8 là đảm bảo **tính nhất quán và dễ đọc** trên toàn dự án, **giảm lỗi**, và **cải thiện hiệu quả làm việc nhóm**.
+
+##### Các quy tắc chính của PEP-8 bao gồm:
+
+- **Quy tắc đặt tên (Naming Convention)**
+    - **Biến/Hàm**: snake_case (chữ thường, dấu gạch dưới)
+    - **Class**: PascalCase (viết hoa chữ cái đầu mỗi từ)
+    - **Hằng số**: UPPER_CASE (tất cả chữ hoa, dấu gạch dưới)
+- **Thụt lề**: Luôn dùng **4 khoảng trắng** cho mỗi cấp thụt lề, không dùng tab.
+- **Khoảng trắng**: Thêm khoảng trắng hai bên phép toán (a = b + c), sau dấu phẩy (f(a, b)) và không thêm trong ngoặc.
+- **Giới hạn độ dài dòng code**: Tối đa **79 ký tự/dòng** cho mã nguồn và **72 ký tự/dòng** cho docstring/comment
+- **Tổ chức Import đúng chuẩn**: Sắp xếp theo thứ tự: thư viện chuẩn, thư viện bên thứ ba và module nội bộ
+- **Dòng trắng và cấu trúc hàm/class**: Sử dụng **2 dòng trắng** để phân tách các định nghĩa class và **1 dòng trắng** giữa các hàm/phương thức trong class
+
+##### Tài liệu hóa (Documentation) và Công cụ hỗ trợ
+
+Để code dễ hiểu hơn, bạn cần tài liệu hóa bằng **docstring** (đặt trong cặp ba nháy kép """ sau định nghĩa hàm) và sử dụng **type hints** (annotations). Docstring có thể theo nhiều định dạng như Google style hay NumPy style và type hints giúp kiểm tra kiểu dữ liệu tĩnh, phát hiện lỗi sớm.
+
+Các công cụ kiểm tra và định dạng code tự động giúp tuân thủ PEP-8 và Clean Code:
+
+- **Flake8**: Kiểm tra cú pháp, style (PEP-8), phát hiện lỗi logic và độ phức tạp
+- **Black**: Định dạng code tự động, chuẩn hóa style
+- **Pylint**: Phân tích tĩnh code, đánh giá chất lượng
+- **Mypy**: Kiểm tra kiểu dữ liệu tĩnh dựa trên type annotations.
+
+Bên cạnh đó, cũng nên tổ chức dự án Python theo cấu trúc chuẩn, bao gồm các thư mục cho mã nguồn (src/), kiểm thử (tests/), tài liệu (docs/), tài nguyên (resources/), và các file cấu hình như README.md, .gitignore
+
+### 2.2.2: VIẾT CODE PYTHONIC
+
+**Code Pythonic** nghĩa là tận dụng tối đa tính năng và đặc điểm riêng của Python để viết code. Code Pythonic **dễ đọc, dễ hiểu, ngắn gọn như đọc tiếng Anh**, đồng thời tuân thủ các quy ước và triết lý của Python
+
+#### Triết lý Python (The Zen of Python)
+
+Triết lý này, được Tim Peters viết trong PEP 20, bao gồm 19 nguyên tắc hướng dẫn thiết kế Python. Một số nguyên tắc tiêu biểu là:
+
+- **Beautiful is better than ugly** (Cái đẹp tốt hơn cái xấu).
+- **Explicit is better than implicit** (Rõ ràng tốt hơn ẩn ý).
+- **Simple is better than complex** (Đơn giản tốt hơn phức tạp).
+- **Complex is better than complicated** (Phức tạp vẫn tốt hơn rắc rối).
+- **Flat is better than nested** (Phẳng tốt hơn lồng nhau).
+
+#### Các Kỹ thuật Pythonic Phổ biến
+
+- **Indexes và Slices**: Cho phép truy cập và thao tác linh hoạt với các phần tử trong chuỗi (list, tuple, string) bằng cú pháp sequence[start:stop:step]
+    - Ví dụ: data[::2] (phần tử chẵn), data[::-1] (đảo ngược)
+- **List, Dict, Set Comprehensions**: Viết code gọn và nhanh hơn cho việc tạo danh sách, từ điển, tập hợp.
+    - Ví dụ: squares = [n**2 for n in numbers]
+- **Context Managers (với with)**: Cơ chế quản lý tài nguyên, giúp tự động giải phóng tài nguyên (đóng file, kết nối DB) khi khối lệnh kết thúc, ngay cả khi có lỗi.
+    - Ví dụ: with open('file.txt', 'r') as f:
+    - Có thể tạo context manager riêng với decorator @contextmanager từ contextlib
+- **So Sánh và Điều Kiện - Pythonic Style**:
+    - So sánh với None: Dùng is hoặc is not (if x is None) thay vì ==
+    - So sánh Boolean: Không cần so sánh tường minh (if is_active: thay vì if is_active == True)
+    - Kiểm tra chuỗi/list/dict rỗng: Tận dụng truthiness (if not my_list:)
+    - Kiểm tra trong collection: Dùng in (if item in my_list:)
+    - Chaining comparison: So sánh chuỗi (if 0 < x <= 10:)
+- **Properties và dấu underscore _**
+    - @property: Cho phép sử dụng method như thuộc tính, giúp code gọn và dễ kiểm soát truy cập.
+    - _var (Single Underscore): Quy ước cho biến private hoặc "internal use"
+    - __var (Double Underscore): Name mangling, giúp tránh xung đột khi kế thừa
+    - __var (Double Underscore hai bên): Dành cho phương thức đặc biệt (magic/dunder methods)
+    - _ (Một dấu gạch dưới): Dùng làm biến tạm không quan trọng
+
+### 2.2.3: NGUYÊN LÝ CHUNG ĐỂ VIẾT CODE TỐT
+
+Phần này tập trung vào các nguyên lý cốt lõi giúp tạo ra mã bền vững và dễ bảo trì
+
+- **DRY (Don't Repeat Yourself - Đừng lặp lại chính mình)**
+    - **Nguyên tắc**: Tránh lặp lại code, mỗi kiến thức nên được định nghĩa một lần duy nhất
+    - **Lợi ích**: Giảm lỗi, code ngắn gọn, dễ bảo trì, tăng khả năng tái sử dụng.
+    - **Áp dụng**: Tách các đoạn code lặp lại thành functions, classes, hoặc modules.
+- **YAGNI (You Aren't Gonna Need It - Bạn sẽ không cần đến nó)**
+    - **Nguyên tắc**: Không thêm tính năng cho đến khi thực sự cần thiết, tránh phức tạp hóa không cần thiết.
+    - **Lợi ích**: Tránh lãng phí thời gian, giảm technical debt.
+- **KISS (Keep It Simple, Stupid - Giữ cho nó đơn giản, ngốc nghếch)**
+    - **Nguyên tắc**: Luôn ưu tiên các giải pháp đơn giản và dễ hiểu nhất.
+    - **Lợi ích**: Code dễ đọc, debug, bảo trì và mở rộng, giảm bug.
+- **Defensive Programming (Lập trình phòng thủ)**
+    - **Nguyên tắc**: Luôn giả định rằng sẽ có lỗi xảy ra, kiểm tra đầu vào và xử lý ngoại lệ.
+    - **Lợi ích**: Tạo code bền vững, có khả năng ứng phó với tình huống không lường trước.
+    - **Xử lý lỗi**: Luôn bắt lỗi cụ thể thay vì chung chung, sử dụng logging thay vì print, và tạo custom exceptions khi cần thiết.
+- **Separation of Concerns (Phân chia trách nhiệm)**
+    - **Nguyên tắc**: Phân chia code thành các module, class hoặc hàm riêng biệt, mỗi phần chỉ đảm nhiệm một chức năng cụ thể.
+    - **Lợi ích**: Dễ bảo trì, dễ kiểm thử, tăng khả năng tái sử dụng.
+
+### 2.2.4: NGUYÊN TẮC SOLID VÀ DESIGN PATTERNS
+
+Các nguyên tắc SOLID và Design Patterns là những công cụ mạnh mẽ để thiết kế hệ thống phần mềm có tính mở rộng, linh hoạt và dễ bảo trì.
+
+#### Giới thiệu Nguyên tắc SOLID
+
+**SOLID** là một tập hợp 5 nguyên tắc thiết kế hướng đối tượng được Robert C. Martin (Uncle Bob) đưa ra:
+
+1. **Single Responsibility Principle (SRP - Nguyên tắc Trách nhiệm Đơn lẻ)**
+   - **Nguyên tắc**: Mỗi lớp chỉ nên có **một lý do để thay đổi**. Tập trung vào một nhiệm vụ duy nhất.
+   - **Áp dụng**: Chia nhỏ các lớp lớn thành các module nhỏ hơn, mỗi module có một trách nhiệm cụ thể.
+
+2. **Open/Closed Principle (OCP - Nguyên tắc Mở/Đóng)**
+   - **Nguyên tắc**: Mở để mở rộng, đóng để sửa đổi. Code nên dễ dàng thêm chức năng mới mà không cần sửa đổi code hiện có.
+   - **Áp dụng**: Sử dụng abstraction (ABC) và mở rộng thông qua kế thừa hoặc composition.
+
+3. **Liskov Substitution Principle (LSP - Nguyên tắc Thay thế Liskov)**
+   - **Nguyên tắc**: Các lớp con phải thay thế được lớp cha mà không làm thay đổi tính đúng đắn của chương trình.
+   - **Áp dụng**: Đảm bảo hành vi nhất quán của lớp con so với lớp cha, tránh thêm các điều kiện tiên quyết mạnh hơn hoặc ném ra ngoại lệ mới.
+
+4. **Interface Segregation Principle (ISP - Nguyên tắc Phân tách Giao diện)**
+   - **Nguyên tắc**: Nhiều interface nhỏ chuyên biệt tốt hơn một interface lớn. Client không nên bị buộc phụ thuộc vào các phương thức mà họ không sử dụng.
+   - **Áp dụng**: Tách nhỏ interface thành các interface chuyên biệt, dùng ABC hoặc typing.Protocol.
+
+5. **Dependency Inversion Principle (DIP - Nguyên tắc Đảo ngược Sự phụ thuộc)**
+   - **Nguyên tắc**: Các module cấp cao không nên phụ thuộc trực tiếp vào module cấp thấp, mà cả hai nên phụ thuộc vào abstraction (interfaces/protocols).
+   - **Áp dụng**: Dùng Abstract Base Classes (ABC) hoặc typing.Protocol, hoặc đơn giản là duck typing.
+
+#### Áp dụng SOLID vào Python
+
+Python với **dynamic typing** và **duck typing** hỗ trợ rất tốt cho việc áp dụng SOLID. Module abc (Abstract Base Classes) và typing.Protocol giúp định nghĩa interface rõ ràng, trong khi **composition over inheritance** khuyến khích việc kết hợp các đối tượng nhỏ để đạt được SRP và giảm phụ thuộc.
+
+#### Các Design Patterns Phổ Biến
+
+Design Patterns là các giải pháp tái sử dụng cho các vấn đề thiết kế phần mềm phổ biến. Chúng được chia thành ba nhóm chính:
+
+- **Creational Patterns (Mẫu Khởi tạo)**: Liên quan đến việc tạo đối tượng một cách linh hoạt.
+    - **Factory Pattern**: Tạo đối tượng mà không cần biết lớp con cụ thể, ẩn logic phức tạp.
+    - **Singleton Pattern**: Chỉ tạo duy nhất một instance của một lớp, thường dùng cho logging, database.
+- **Structural Patterns (Mẫu Cấu trúc)**: Xác định mối quan hệ giữa các đối tượng.
+    - **Adapter Pattern**: Cho phép các interface không tương thích làm việc với nhau.
+    - **Decorator Pattern**: Thêm chức năng mới cho đối tượng mà không sửa đổi cấu trúc hiện có.
+- **Behavioral Patterns (Mẫu Hành vi)**: Xác định cách giao tiếp giữa các đối tượng.
+    - **Command Pattern**: Đóng gói yêu cầu như một đối tượng, cho phép tham số hóa client với các hoạt động khác nhau.
+    - **Template Method Pattern**: Định nghĩa khung thuật toán trong một phương thức, cho phép các lớp con định nghĩa lại các bước cụ thể mà không thay đổi cấu trúc thuật toán.
+
+Để sử dụng Design Patterns hiệu quả, bạn cần **nắm vững 5 nguyên tắc SOLID**, **sử dụng Design Patterns phù hợp** với vấn đề cần giải quyết, **áp dụng SOLID vào Python** bằng cách tận dụng các đặc điểm của ngôn ngữ, và quan trọng nhất là **tránh lạm dụng** chúng.
+    
 
 

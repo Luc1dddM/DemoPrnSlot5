@@ -74,6 +74,9 @@ Biểu diễn bằng hình oval (Chen) hoặc nằm trong thực thể (Crow's F
 #### 2NF – Second Normal Form
 - Đã ở 1NF
 - Mọi thuộc tính không khóa **phụ thuộc đầy đủ** vào toàn bộ khóa chính
+> **Giải thích:**  
+> Phụ thuộc đầy đủ nghĩa là một thuộc tính không khóa phải **phụ thuộc vào toàn bộ khóa chính**, **không chỉ phụ thuộc vào một phần của khóa**.  
+> Điều này thường xảy ra ở các bảng có **khóa chính là tổ hợp của nhiều cột** (khóa tổng hợp). Nếu một thuộc tính chỉ dựa vào một phần của khóa để xác định giá trị của nó, thì đó là **phụ thuộc từng phần** – vi phạm 2NF.
 
 #### 3NF – Third Normal Form
 - Đã ở 2NF

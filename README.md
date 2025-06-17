@@ -75,16 +75,23 @@ Biểu diễn bằng hình oval (Chen) hoặc nằm trong thực thể (Crow's F
 - Đã ở 1NF
 - Mọi thuộc tính không khóa **phụ thuộc toàn phần** vào toàn bộ khóa chính
 > **Giải thích:**  
-> Phụ thuộc đầy đủ nghĩa là một thuộc tính không khóa phải **phụ thuộc vào toàn bộ khóa chính**, **không chỉ phụ thuộc vào một phần của khóa**.  
-**Ví dụ**
-> | student\_id | course\_id | enrollment\_date |
-| ----------- | ---------- | ---------------- |
-| S001        | C001       | 2025-01-10       |
-| S002        | C001       | 2025-01-11       |
-> Khóa chính của bảng là (student_id, course_id) – tức là một sinh viên có thể đăng ký nhiều khóa học, và một khóa học có nhiều sinh viên.
-> Thuộc tính enrollment_date thể hiện ngày sinh viên đăng ký một khóa học cụ thể.
-→ Trong trường hợp này, enrollment_date phụ thuộc đầy đủ vào toàn bộ khóa chính (student_id, course_id).
-Vì nếu chỉ biết student_id hoặc chỉ course_id thì không thể xác định duy nhất enrollment_date.
+> Phụ thuộc đầy đủ nghĩa là một thuộc tính không khóa phải **phụ thuộc vào toàn bộ khóa chính**, **không chỉ phụ thuộc vào một phần của khóa**.
+
+**Ví dụ:**
+
+| student_id | course_id | enrollment_date |
+|------------|-----------|------------------|
+| S001       | C001      | 2025-01-10       |
+| S002       | C001      | 2025-01-11       |
+
+Khóa chính của bảng là `(student_id, course_id)` – tức là một sinh viên có thể đăng ký nhiều khóa học, và một khóa học có nhiều sinh viên.
+
+Thuộc tính `enrollment_date` thể hiện **ngày sinh viên đăng ký một khóa học cụ thể**.
+
+➡️ Trong trường hợp này, `enrollment_date` **phụ thuộc đầy đủ vào toàn bộ khóa chính** `(student_id, course_id)`.
+
+Vì nếu chỉ biết `student_id` **hoặc** chỉ `course_id` thì **không thể xác định duy nhất `enrollment_date`**.
+
 
 #### 3NF – Third Normal Form
 - Đã ở 2NF

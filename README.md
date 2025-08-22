@@ -1,263 +1,245 @@
-# NumPy Recap - Xử lý dữ liệu đa chiều cho người mới bắt đầu
+# BLIP-2: Bootstrapping Language-Image Pre-training
 
-## 📚 Giới thiệu NumPy
+## 1. Vấn đề của các mô hình thị giác-ngôn ngữ hiện tại
 
-NumPy (Numerical Python) là một thư viện Python mạnh mẽ dành cho tính toán khoa học. Nó cung cấp:
+### 1.1 Chi phí huấn luyện khổng lồ
 
-- **Mảng đa chiều hiệu quả**: Cấu trúc dữ liệu cơ bản cho machine learning
-- **Tính toán vectorized**: Xử lý toàn bộ mảng cùng lúc thay vì từng phần tử
-- **Tích hợp tốt**: Là nền tảng cho pandas, scikit-learn, TensorFlow...
+Các mô hình vision-language truyền thống thường được huấn luyện **end-to-end** từ đầu, tương tự như việc xây một tòa nhà từ nền móng. Cách tiếp cận này:
+- Yêu cầu lượng dữ liệu và tài nguyên tính toán khổng lồ
+- Tốn kém và mất rất nhiều thời gian
+- Tạo ra rào cản lớn cho các nghiên cứu và ứng dụng
 
-### 🎯 Tại sao cần NumPy?
+### 1.2 Thiếu tính linh hoạt
 
-```python
-# Cách Python thuần túy - chậm
-python_list = [1, 2, 3, 4]
-result = []
-for i in python_list:
-    result.append(i * 2)
+Các nhà nghiên cứu đã có sẵn nhiều mô hình mạnh trong từng lĩnh vực:
+- **Bộ mã hóa hình ảnh** (Vision Encoders): chuyên về xử lý thị giác
+- **Mô hình ngôn ngữ lớn** (LLMs): chuyên về xử lý ngôn ngữ
 
-# Cách NumPy - nhanh và ngắn gọn
-import numpy as np
-arr = np.array([1, 2, 3, 4])
-result = arr * 2  # Tự động nhân tất cả phần tử
+Tuy nhiên, khi muốn kết hợp chúng, đa số phương pháp buộc phải huấn luyện lại toàn bộ, khiến những kiến thức tích lũy từ trước khó được tận dụng tối đa.
+
+### 1.3 Hạn chế của các phương pháp hiện có
+
+#### Frozen và Flamingo
+- **Ý tưởng**: "Đóng băng" LLM, chỉ huấn luyện phần kết nối với hình ảnh
+- **Vấn đề**: 
+  - Flamingo cần số tham số lớn gấp hàng chục lần BLIP-2 để đạt hiệu suất tương tự
+  - Chỉ dựa vào **language modeling loss** (dự đoán từ tiếp theo)
+  - Không đủ để LLM học cách liên kết hình ảnh với ngôn ngữ khi bị đóng băng
+
+#### Catastrophic Forgetting
+Khi mô hình học thêm khả năng thị giác, nó có thể đánh mất phần nào năng lực ngôn ngữ vốn có - giống như một người học ngoại ngữ nhưng quên cách sử dụng tiếng mẹ đẻ.
+
+## 2. Giải pháp của BLIP-2
+
+### 2.1 Triết lý thiết kế
+
+BLIP-2 **tận dụng các thành phần có sẵn** thay vì xây mới từ đầu:
+- Giữ nguyên (frozen) bộ mã hóa hình ảnh mạnh đã được huấn luyện
+- Giữ nguyên (frozen) LLM đã được huấn luyện
+- Thêm một thành phần nhẹ nhưng quan trọng: **Q-Former**
+
+### 2.2 Vai trò của Q-Former
+
+Q-Former hoạt động như một **"người phiên dịch"** giữa mắt và não:
+- Trích xuất các đặc trưng hình ảnh cần thiết
+- Chuyển đổi thông tin theo cách LLM có thể hiểu
+- Chỉ có ~188 triệu tham số (nhỏ hơn nhiều so với các giải pháp khác)
+- Giúp BLIP-2 đạt hiệu quả vượt trội
+
+![Q-Former model](https://github.com/Luc1dddM/DemoPrnSlot5/blob/main/Screenshot%20From%202025-08-22%2010-44-01.png)
+
+## 3. Kiến trúc BLIP-2
+
+### 3.1 Ba thành phần chính
+
+```
+[Hình ảnh] → [Image Encoder] → [Q-Former] → [LLM] → [Văn bản]
+    ↓            (Frozen)        (Trainable)   (Frozen)      ↓
+Patch Embeddings              Query Embeddings           Generated Text
 ```
 
-## 📊 Cấu trúc dữ liệu: Mảng đa chiều
+#### 1. Image Encoder (Frozen)
+- **Loại**: Thường là Vision Transformer (ViT)
+- **Pre-training**: CLIP, MAE, hoặc BEiT-3
+- **Đầu ra**: Patch embeddings (mỗi patch = một vector)
+- **Trạng thái**: Đóng băng (không cập nhật trọng số)
 
-### 1D Array (Mảng 1 chiều)
-```python
-# Giống như danh sách điểm số của một học sinh
-scores = np.array([8, 9, 7, 10])
-print(scores.shape)  # (4,) - 4 phần tử
+#### 2. Q-Former (Trainable)
+- **Cấu trúc**: Transformer nhỏ gọn
+- **Input**: 
+  - Query Tokens (tham số học được)
+  - Image features từ Image Encoder
+- **Cơ chế Attention đặc biệt**:
+  - ✅ Query tokens **attend** đến image embeddings
+  - ❌ Image embeddings **KHÔNG attend ngược** vào queries
+- **Đầu ra**: Query embeddings (thông tin ảnh đã được nén)
+
+#### 3. Text Encoder/LLM (Frozen)
+- **Stage 1**: BERT (cho representation learning)
+- **Stage 2**: LLM như OPT, T5, Vicuna (cho generation)
+- **Trạng thái**: Đóng băng (không cập nhật trọng số)
+
+![Q-Former model](https://github.com/Luc1dddM/DemoPrnSlot5/blob/main/Screenshot%20From%202025-08-22%2009-57-51.png)
+
+## 4. Pipeline Huấn luyện Hai Giai đoạn
+
+### Stage 1: Vision-Language Representation Learning
+
+**Mục tiêu**: Dạy Q-Former cách trích xuất thông tin ảnh và liên kết với văn bản
+
+**Text Encoder**: BERT (frozen)
+
+**Ba nhiệm vụ song song**:
+
+#### 4.1 Image-Text Contrastive Learning (ITC)
+
+**Mục đích**: Học cách đối chiếu ảnh và văn bản
+
+**Pipeline**:
+```
+Ảnh → Image Encoder → Patch Embeddings
+                           ↓
+Query Tokens → Q-Former → Query Embeddings → Image Representation
+                           
+Văn bản → BERT → [CLS] Embedding → Text Representation
+
+Cosine Similarity(Image_Repr, Text_Repr) → InfoNCE Loss
 ```
 
-### 2D Array (Mảng 2 chiều - Ma trận)
-```python
-# Giống như bảng điểm của cả lớp
-class_scores = np.array([
-    [8, 9, 7, 10],    # Học sinh 1
-    [6, 8, 9, 7],     # Học sinh 2
-    [9, 10, 8, 9]     # Học sinh 3
-])
-print(class_scores.shape)  # (3, 4) - 3 học sinh, 4 môn
+**Cơ chế Attention**:
+- ✅ Queries attend vào image embeddings (cross-attention)
+- ❌ Image embeddings không attend ngược (bảo vệ image encoder)
+
+**Loss Function**: InfoNCE (contrastive loss)
+- Ảnh khớp văn bản → similarity cao
+- Ảnh không khớp văn bản → similarity thấp
+
+#### 4.2 Image-grounded Text Generation (ITG)
+
+**Mục đích**: Sinh mô tả văn bản từ hình ảnh
+
+**Pipeline**:
+```
+Ảnh → Image Encoder → Q-Former → Query Embeddings (context)
+                                      ↓
+Văn bản (shifted right) → BERT Decoder → Generated Caption
 ```
 
-### 3D Array (Mảng 3 chiều)
-```python
-# Giống như điểm của nhiều lớp trong nhiều học kỳ
-school_scores = np.array([
-    [[8, 9, 7], [6, 8, 9]],    # Học kỳ 1
-    [[9, 8, 10], [7, 9, 8]]    # Học kỳ 2
-])
-print(school_scores.shape)  # (2, 2, 3) - 2 học kỳ, 2 lớp, 3 môn
+**Cơ chế Masking**:
+- Query embeddings làm **encoder hidden states**
+- Văn bản dùng **causal mask**: token hiện tại chỉ nhìn thấy các token trước đó
+- BERT đóng vai trò text decoder
+
+**Loss Function**: Cross-entropy loss giữa output và ground truth caption
+
+#### 4.3 Image-Text Matching (ITM)
+
+**Mục đích**: Phân loại cặp ảnh-văn bản có khớp nhau không
+
+**Pipeline**:
+```
+Query Embeddings + Text Embeddings → Concatenate
+                    ↓
+             Transformer → [CLS] Token
+                    ↓
+           Classification Head → Binary Label
 ```
 
-## 🔧 Các hàm tạo mảng cơ bản
+**Loss Function**: Binary cross-entropy
+- Label 1: Ảnh và văn bản khớp
+- Label 0: Ảnh và văn bản không khớp
 
-### Tạo mảng đặc biệt
-```python
-# Mảng toàn số 0 - hữu ích để khởi tạo
-zeros_arr = np.zeros((3, 4))
-print(zeros_arr)
-# [[0. 0. 0. 0.]
-#  [0. 0. 0. 0.]
-#  [0. 0. 0. 0.]]
+![Objectives mask](https://github.com/Luc1dddM/DemoPrnSlot5/blob/main/Screenshot%20From%202025-08-22%2009-58-25.png)
 
-# Mảng toàn số 1 - hữu ích để tạo mask
-ones_arr = np.ones((2, 3))
-print(ones_arr)
-# [[1. 1. 1.]
-#  [1. 1. 1.]]
+Stage 2: Vision-to-Language Generative Learning
+Mục tiêu: Kết nối Q-Former với LLM để sinh văn bản từ ảnh
+Thay đổi quan trọng: Không dùng BERT nữa, chuyển sang LLM
+Sau khi Stage 1 huấn luyện Q-Former để sinh ra visual queries có khả năng align với text space, Stage 2 kết nối Q-Former với Large Language Model (LLM). Tùy kiến trúc LLM, pipeline chia làm 2 hướng chính:
+4.4 Case A: Decoder-only LLM (OPT, GPT, LLaMA)
+Pipeline:
+Image → Image Encoder (frozen) → Q-Former → Query Embeddings
+                                    ↓
+                            Linear Projection
+                                    ↓
+[Query Embeddings + Prompt Tokens (optional)] → LLM Decoder
+                                    ↓
+                              Generated Text
+Cơ chế hoạt động:
 
-# Dãy số liên tiếp - giống range() nhưng mạnh hơn
-sequence = np.arange(0, 10, 2)  # từ 0 đến 10, bước nhảy 2
-print(sequence)  # [0 2 4 6 8]
-```
+LLM chỉ có decoder → không có encoder riêng biệt
+Query Embeddings được chèn trực tiếp vào đầu chuỗi input như soft prompts
+Prompt text (ví dụ: "Question: What is in the image?") được nối ngay sau queries
+LLM Decoder dùng causal self-attention, nên mọi text token đều có thể "nhìn thấy" các query embeddings
 
-### Reshape - Thay đổi hình dạng
-```python
-# Ví dụ: Chuyển dữ liệu 1D thành bảng 2D
-data = np.arange(12)  # [0, 1, 2, ..., 11]
-table = data.reshape(3, 4)  # Chuyển thành bảng 3x4
-print(table)
-# [[ 0  1  2  3]
-#  [ 4  5  6  7]
-#  [ 8  9 10 11]]
+Ví dụ Input Sequence:
+[Q1] [Q2] [Q3] ... [Q32] [Question:] [What] [is] [in] [the] [image] [?]
+ ↑____Query Embeddings____↑      ↑_________Text Tokens_________↑
+Attention Pattern:
 
-# Flatten - Chuyển về 1D
-flat_data = table.flatten()
-print(flat_data)  # [0 1 2 3 4 5 6 7 8 9 10 11]
-```
+Query embeddings có thể attend vào nhau
+Text tokens có thể attend vào tất cả query embeddings và các text token trước đó
+Causal masking được áp dụng cho text tokens (không nhìn thấy token tương lai)
 
-## 🔍 Indexing và Slicing
+Loss Function: Cross-entropy loss giữa output sinh ra và ground truth
+4.5 Case B: Encoder-Decoder LLM (FlanT5, BART-like)
+Pipeline:
+Image → Image Encoder (frozen) → Q-Former → Query Embeddings
+                                    ↓
+                            Linear Projection
+                                    ↓
+[Query Embeddings + Prefix Text (optional)] → LLM Encoder
+                                 ↓
+                           LLM Decoder → Generated Text
+Cơ chế hoạt động:
 
-### Slicing cơ bản
-```python
-# Ví dụ: Bảng điểm học sinh
-grades = np.array([
-    [8, 9, 7, 10],  # Toán, Lý, Hóa, Sinh
-    [6, 8, 9, 7],
-    [9, 10, 8, 9]
-])
+Query Embeddings sau khi chiếu sang dimension của LLM được concatenate với prefix text tokens
+Prefix text thường là instruction (ví dụ: "Describe this image:")
+Toàn bộ sequence này đi qua LLM Encoder để tạo contextual representations
+LLM Decoder sử dụng cross-attention với encoder outputs để sinh caption hoặc answer
 
-# Lấy điểm Toán của tất cả học sinh
-math_scores = grades[:, 0]  # [8, 6, 9]
+Ví dụ Encoder Input:
+[Q1] [Q2] [Q3] ... [Q32] [Describe] [this] [image] [:]
+ ↑____Query Embeddings____↑    ↑___Prefix Text___↑
+Attention trong Encoder:
 
-# Lấy điểm của học sinh đầu tiên
-first_student = grades[0, :]  # [8, 9, 7, 10]
+Bidirectional attention cho toàn bộ sequence (query embeddings + prefix text)
+Không có causal masking trong encoder
 
-# Lấy điểm Lý và Hóa của 2 học sinh đầu
-physics_chemistry = grades[0:2, 1:3]
-# [[9, 7],
-#  [8, 9]]
-```
+Loss Function: Cross-entropy loss giữa decoder output và ground truth
 
-### Boolean Indexing
-```python
-# Tìm học sinh có điểm Toán >= 8
-high_math_students = grades[grades[:, 0] >= 8]
-print(high_math_students)
+![BLIP-2’s second-stage](https://github.com/Luc1dddM/DemoPrnSlot5/blob/main/Screenshot%20From%202025-08-22%2009-59-09.png)
 
-# Tìm tất cả điểm >= 9
-excellent_grades = grades[grades >= 9]
-print(excellent_grades)  # [9, 10, 9, 10, 9]
-```
+5. Ưu điểm của BLIP-2
+5.1 Hiệu quả tính toán
 
-## 📈 Các phép toán thống kê
+Tham số học: Chỉ ~188M (Q-Former) thay vì toàn bộ model
+Tái sử dụng: Tận dụng các model pretrained mạnh
+Linh hoạt: Có thể thay đổi Image Encoder hoặc LLM mà không cần huấn luyện lại từ đầu
 
-```python
-# Dữ liệu doanh thu theo tháng của các cửa hàng
-revenue = np.array([
-    [100, 120, 110, 130],  # Cửa hàng 1
-    [90, 100, 95, 105],    # Cửa hàng 2
-    [110, 130, 125, 140]   # Cửa hàng 3
-])
+5.2 Hiệu suất vượt trội
 
-# Tổng doanh thu tất cả
-total_revenue = np.sum(revenue)
-print(f"Tổng doanh thu: {total_revenue}")
+So với Flamingo: Đạt kết quả tương tự với ít tham số hơn hàng chục lần
+Đa nhiệm: Xử lý tốt nhiều task khác nhau (VQA, captioning, reasoning)
+Tránh catastrophic forgetting: Giữ nguyên năng lực của các component gốc
 
-# Doanh thu trung bình theo tháng (axis=0)
-monthly_avg = np.mean(revenue, axis=0)
-print(f"Doanh thu TB theo tháng: {monthly_avg}")
+5.3 Thiết kế thông minh
 
-# Doanh thu trung bình của từng cửa hàng (axis=1)
-store_avg = np.mean(revenue, axis=1)
-print(f"Doanh thu TB từng cửa hàng: {store_avg}")
+Two-stage training: Tách biệt việc học representation và generation
+Attention mechanism: Bảo vệ frozen components khỏi bị ảnh hưởng
+Query-based approach: Trích xuất thông tin ảnh hiệu quả
 
-# Cửa hàng có doanh thu cao nhất
-best_store = np.argmax(np.sum(revenue, axis=1))
-print(f"Cửa hàng tốt nhất: {best_store}")
-```
+[Cần hình minh họa: Biểu đồ so sánh hiệu suất vs số tham số của các phương pháp]
+6. Kết luận
+BLIP-2 đại diện cho một bước tiến quan trọng trong lĩnh vực vision-language modeling bằng cách:
 
-## 🔄 Broadcasting - Phép toán thông minh
+Giải quyết vấn đề chi phí: Giảm drastically tài nguyên cần thiết cho huấn luyện
+Tận dụng tri thức có sẵn: Kết hợp các model pretrained mạnh một cách thông minh
+Thiết kế linh hoạt: Cho phép swap các component mà không ảnh hưởng đến toàn bộ hệ thống
+Hiệu suất cao: Đạt kết quả SOTA trên nhiều benchmark quan trọng
 
-Broadcasting cho phép thực hiện phép toán giữa các mảng có kích thước khác nhau:
+Phương pháp này mở ra hướng nghiên cứu mới cho việc xây dựng các hệ thống AI đa phương thức hiệu quả và tiết kiệm tài nguyên.
 
-```python
-# Ví dụ: Tăng lương cho nhân viên
-salaries = np.array([
-    [3000, 3500, 4000],  # Phòng A
-    [2800, 3200, 3800],  # Phòng B
-    [3200, 3600, 4200]   # Phòng C
-])
+Tài liệu tham khảo:
 
-# Tăng lương đồng loạt 500k cho tất cả
-new_salaries = salaries + 500
-print("Lương sau khi tăng:")
-print(new_salaries)
-
-# Tăng lương theo % khác nhau cho từng phòng
-bonus_rate = np.array([0.1, 0.15, 0.12])  # 10%, 15%, 12%
-bonus_salaries = salaries * (1 + bonus_rate.reshape(-1, 1))
-print("Lương sau khi tăng theo %:")
-print(bonus_salaries)
-```
-
-## 🖼️ Ứng dụng vào Machine Learning/Deep Learning
-### 1. Softmax Function
-```python
-def softmax(x):
-    """
-    Chuyển đổi điểm số thành xác suất
-    Ví dụ: [2, 1, 0] -> [0.67, 0.24, 0.09]
-    """
-    # Trừ max để tránh overflow
-    x_stable = x - np.max(x)
-    exp_x = np.exp(x_stable)
-    return exp_x / np.sum(exp_x)
-```
-
-### 2. Tạo dữ liệu ngẫu nhiên
-```python
-# Seed để reproducible
-np.random.seed(42)
-
-# Dữ liệu phân phối chuẩn
-normal_data = np.random.randn(1000)  # mean=0, std=1
-
-# Dữ liệu uniform
-uniform_data = np.random.uniform(0, 1, 1000)
-
-# Chọn ngẫu nhiên
-choices = np.random.choice(['A', 'B', 'C'], size=100, p=[0.5, 0.3, 0.2])
-```
-
-### 3.  Tiền xử lý ảnh (image preprocessing) trước khi huấn luyện mô hình bằng pytorch
-> Pytorch yêu cầu định dạng ảnh là CHW (Channels, Height, Width) vì vậy cần chuyển đổi kênh màu.
-```python
-# Hàm chuẩn hóa ảnh
-def transform(img, img_size=(224, 224)):
-    img = img.resize(img_size)
-    img = np.array(img)[..., :3]  # Đảm bảo lấy 3 kênh RGB
-    img = torch.tensor(img).permute(2, 0, 1).float()  # Đổi thành (C, H, W)
-    normalized_img = img / 255.0  # Chuẩn hóa về [0, 1]
-
-    return normalized_img
-
-# Định nghĩa bộ dataset
-class CIFARDataset(Dataset):
-    def __init__(
-        self,
-        X, y,
-        transform=None
-    ):
-        self.transform = transform
-        self.img_paths = X
-        self.labels = y
-
-    def __len__(self):
-        return len(self.img_paths)
-
-    def __getitem__(self, idx):
-        img_path = self.img_paths[idx]
-        img = Image.open(img_path).convert("RGB")
-
-        if self.transform:
-            img = self.transform(img) # Áp dụng hàm chuẩn hóa vào bộ dataset
-
-        return img, self.labels[idx]
-```
-## 🚀 Lời khuyên cho người mới bắt đầu
-
-1. **Luôn kiểm tra shape**: `print(arr.shape)` trước khi thực hiện phép toán
-2. **Sử dụng axis**: Hiểu rõ axis=0 (theo hàng) và axis=1 (theo cột)
-3. **Vectorization**: Tránh vòng lặp, dùng phép toán trên toàn mảng
-4. **Broadcasting**: Tận dụng để viết code ngắn gọn
-5. **Copy vs View**: Cẩn thận với `.copy()` và slicing
-
-## 🎓 Tổng kết
-
-NumPy là nền tảng của data science và machine learning trong Python. Với các khái niệm cơ bản như:
-
-- **Mảng đa chiều**: Cấu trúc dữ liệu linh hoạt
-- **Indexing/Slicing**: Truy cập dữ liệu hiệu quả
-- **Broadcasting**: Phép toán thông minh
-- **Vectorization**: Tính toán nhanh chóng
-
-Bạn đã có đủ kiến thức để bắt đầu các dự án data science thực tế!
-
----
-
-*Happy coding! 🐍✨*
+BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models
+Salesforce Research, 2023
